@@ -1,3 +1,5 @@
+def new_map ():
+    
+    return {"root": None}
 
-def new_map():
     
