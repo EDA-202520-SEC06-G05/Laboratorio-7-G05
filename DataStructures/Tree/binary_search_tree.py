@@ -11,23 +11,24 @@ def default_compare (key, element):
         return 1
     return -1
 
-def get_node(root, key):
+def get_node(root,key):
     
-    if root["left"] == None and root["right"] == None:
-        if root["key"] == key:
-            return root 
-        else: 
-            return None
-        
-    elif root["left"] == None and root["right"] != None:
-        get_node(root["right"], key)
-    elif root["left"] != None and root["right"] == None:
-        get_node(root["left"],key)
-    else:
-        get_node(root["left"],key)
-        get_node(root["right"], key)
-        
-    return None
+    if root is None:
+        return None
+    if bst_node.get_key(root) == key:
+        return root
+    elif bst_node.get_key(root) < key:
+        return get_node(root["right"], key)
+    elif bst_node.get_key(root) > key:
+        return get_node(root["left"], key)
+    
 
 def get (my_bst, key):
-    return get_node(my_bst, key)
+    if my_bst["root"] == None:
+        return None
+    else:
+        node = get_node(my_bst["root"], key)
+        if node is None:
+            return None
+        else: 
+            return bst_node.get_value(node)
