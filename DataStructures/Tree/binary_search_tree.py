@@ -21,7 +21,7 @@ def get_node(root,key):
         return get_node(root["right"], key)
     elif bst_node.get_key(root) > key:
         return get_node(root["left"], key)
-    
+
 
 def get (my_bst, key):
     if my_bst["root"] == None:
@@ -32,3 +32,16 @@ def get (my_bst, key):
             return None
         else: 
             return bst_node.get_value(node)
+        
+
+def size_node(root):
+    if root is None:
+        return 0
+    else:
+        return 1 + size_node(root["left"]) + size_node(root["right"])
+        
+def size (my_bst):
+    if my_bst["root"] is None:
+        return 0
+    else:
+        return size_node(my_bst["root"])
