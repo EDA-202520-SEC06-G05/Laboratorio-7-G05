@@ -4,134 +4,65 @@ def new_map ():
     
     return {"root": None}
 
+def insert_node(root, key, value):
+    if root is None:
+        return {"key": key, "value": value, "left": None, "right": None}
+
+    if key < root["key"]:
+        root["left"] = insert_node(root["left"], key, value)
+    elif key > root["key"]:
+        root["right"] = insert_node(root["right"], key, value)
+    else:
+        root["value"] = value
+    return root
+
+
+def put(my_bst, key, value):
+    my_bst["root"] = insert_node(my_bst["root"], key, value)
+    
+def size_tree(tree):
+    if tree is None:
+        return 0
+    return 1 + size_tree(tree["left"]) + size_tree(tree["right"])
+
 def default_compare (key, element):
     if key == bst_node.get_key(element):
         return 0
-    elif key > me.get_key(entry):
+    elif key > bst_node.get_key(element):
         return 1
     return -1
 
-def find_slot(my_map, key, hash_value):
-    first_avail = None
-    found = False
-    ocupied = False
-    while not found:
-        if is_available(my_map["table"], hash_value):
-            if first_avail is None:
-                first_avail = hash_value
-            entry = al.get_element(my_map["table"], hash_value)
-            if me.get_key(entry) is None:
-                found = True
-        elif default_compare(key, al.get_element(my_map["table"], hash_value)) == 0:
-            first_avail = hash_value
-            found = True
-            ocupied = True
-    hash_value = (hash_value + 1) % my_map["capacity"]
-    return ocupied, first_avail
-
-def rehash(my_map):
-    capacity = (my_map["capacity"] * 2)
-    capacity = int(math.ceil(capacity))
-    capacity = mp.next_prime(capacity)
+def get_node(root,key):
     
-    table = al.new_list()
-    for i in range(capacity):
-        al.add_last(table,{"key":None,"value":None})
-        
-    old_table = my_map["table"]
-    old_table = old_table["elements"]
-    my_map["capacity"] = capacity
-    my_map["size"] = 0
-    my_map["current_factor"] = 0
-    my_map["table"] = table
-    for i in old_table:
-        if i["key"] is not None and i["value"] is not None:
-            put(my_map,i["key"],i["value"])
-    return my_map
-
-def put(my_map,key,value):
-    hash = mp.hash_value(my_map,key)
-    position = find_slot(my_map,key,hash)
-    if position[0] == True:
-        my_map["table"]["elements"][position[1]]["value"] = value
-    else:
-        my_map["table"]["elements"][position[1]]= {"key": key, "value": value}
-        my_map["size"] +=1
-        my_map["current_factor"] = my_map["size"]/my_map["capacity"]
-        if my_map["current_factor"] > my_map["limit_factor"]:
-            rehash(my_map)
-    
-    return my_map
-
-def contains(my_map, key):
-    hash_index = mp.hash_value(my_map, key)
-    slot = find_slot(my_map, key, hash_index)
-    
-    if slot["key"] is None:
-        return False
-    if slot["key"] == key:
-        return True
-    else:
-        return False
-    
-def get(my_map, key):
-    hash_index = mp.hash_value(my_map, key)
-    slot = find_slot(my_map, key, hash_index)
-    
-    if slot["key"] is None:
+    if root is None:
         return None
-    if slot["key"] == key:
-        return slot["value"]
-    else:
-        return None
+    if bst_node.get_key(root) == key:
+        return root
+    elif bst_node.get_key(root) < key:
+        return get_node(root["right"], key)
+    elif bst_node.get_key(root) > key:
+        return get_node(root["left"], key)
 
-def size(my_map):
-    return my_map["size"]
-
-
-def remove(my_map, key):
-    
-    hash_index = mp.hash_value(my_map, key)
-    ocupada, slot = find_slot(my_map, key, hash_index)
-    if ocupada:
-        
-        al.get_element(my_map["table"], slot)["key"] = "_EMPTY_"
-        al.get_element(my_map["table"], slot)["value"] = None
-        
-        
-        my_map["size"] -= 1
-        my_map["current_factor"] = my_map["size"] / my_map["capacity"]
-        return True
-    return False
-
-def is_empty(my_map):
-    if my_map["size"] == 0:
-        return True
-    else:
-        return False
-    
-def key_set(my_map):
-    lista = al.new_list()
-    table = my_map["table"]["elements"]
-    for slot in table:
-        if slot["key"] is not None:
-            al.add_last(lista, slot["key"])
-    return lista
-
-def value_set(my_map):
-    lista = al.new_list()
-    table = my_map["table"]["elements"]
-    for slot in table:
-        if slot["key"] is not None:
-            al.add_last(lista, slot["value"])
-    return lista
-
-
-def get_nodo(root, key):
-    
-    
-    return
-    
 
 def get (my_bst, key):
-    
+    if my_bst["root"] == None:
+        return None
+    else:
+        node = get_node(my_bst["root"], key)
+        if node is None:
+            return None
+        else: 
+            return bst_node.get_value(node)
+        
+
+def size_node(root):
+    if root is None:
+        return 0
+    else:
+        return 1 + size_node(root["left"]) + size_node(root["right"])
+        
+def size (my_bst):
+    if my_bst["root"] is None:
+        return 0
+    else:
+        return size_node(my_bst["root"])
