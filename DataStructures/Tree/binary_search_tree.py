@@ -124,3 +124,42 @@ def delete_max(my_bst):
         my_bst["root"] = delete_max_tree(my_bst["root"])
     return my_bst
 
+def contains(my_bst,key):
+    if get(my_bst,key) is None:
+        return False
+    else:
+        return True
+
+
+def is_empty(my_bst):
+    if my_bst["root"] is None:
+        return True
+    else:
+        return False
+
+
+def key_set_tree(root,keys):
+    if root is not None:
+        key_set_tree(root["left"], keys)
+        keys.append(root["key"])
+        key_set_tree(root["right"], keys)
+
+
+def key_set(my_bst):
+    keys=[]
+    key_set_tree(my_bst["root"], keys)
+    return keys
+
+
+def value_set_tree(root,values):
+    if root is not None:
+        value_set_tree(root["left"], values)
+        values.append(root["value"])
+        value_set_tree(root["right"], values)
+
+
+def value_set(my_bst):
+    values=[]
+    value_set_tree(my_bst["root"], values)
+    return values
+
