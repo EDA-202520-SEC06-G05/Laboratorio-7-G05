@@ -190,7 +190,7 @@ def min_key(analyzer):
     Llave mas pequena
     """
     # TODO Completar la función de consulta de la llave mínima
-    pass
+    return bst.get_min(analyzer["dateIndex"])
 
 
 def max_key(analyzer):
@@ -198,7 +198,7 @@ def max_key(analyzer):
     Llave mas grande
     """
     # TODO Completar la función de consulta de la llave máxima
-    pass
+    return bst.get_max(analyzer["dateIndex"])
 
 
 def get_crimes_by_range(analyzer, initialDate, finalDate):
