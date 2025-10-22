@@ -30,6 +30,7 @@ import datetime
 from DataStructures.Tree import binary_search_tree as bst
 from DataStructures.List import array_list as al
 from DataStructures.Map import map_linear_probing as lp
+from DataStructures.List import single_linked_list as sl
 
 # TODO Realice la importación del Árbol Binario Ordenado
 # TODO Realice la importación de ArrayList (al) como estructura de datos auxiliar para sus requerimientos
@@ -55,7 +56,7 @@ def new_logic():
 
     analyzer['crimes'] = al.new_list()
     # TODO completar la creación del mapa ordenado
-    analyzer['dateIndex'] = lp.new_map()
+    analyzer['dateIndex'] = bst.new_map()
     return analyzer
 
 # Funciones para realizar la carga
@@ -102,7 +103,7 @@ def update_date_index(map, crime):
         datentry = {
             "date": crimedate.date(),
             "crimes": al.new_list(),
-            "index": None
+            "index": 1
         }
         bst.put(map, crimedate.date(), datentry)
     else:
@@ -173,8 +174,8 @@ def index_height(analyzer):
     """
     Altura del arbol
     """
+    return bst.height(analyzer["dateIndex"])
     # TODO Completar la función de consulta de altura del árbol
-    pass
 
 
 def index_size(analyzer):
@@ -182,7 +183,7 @@ def index_size(analyzer):
     Numero de elementos en el indice
     """
     # TODO Completar la función de consulta de tamaño del árbol
-    pass
+    return bst.size(analyzer["dateIndex"])
 
 
 def min_key(analyzer):
@@ -203,10 +204,16 @@ def max_key(analyzer):
 
 def get_crimes_by_range(analyzer, initialDate, finalDate):
     """
-    Retorna el numero de crimenes en un rago de fechas.
+    Retorna el numero de crimenes en un rango de fechas.
     """
+    crimes = 0
+    filtered = bst.values(analyzer["dateIndex"],initialDate, finalDate)
+    i = filtered["first"]
+    for each in range(1, sl.size(filtered)):
+        crimes += i["info"]["crimes"]["size"]
+        i = i["next"]
+    return crimes
     # TODO Completar la función de consulta de crimenes por rango de fechas
-    pass
 
 
 def get_crimes_by_range_code(analyzer, initialDate, offensecode):
@@ -214,5 +221,14 @@ def get_crimes_by_range_code(analyzer, initialDate, offensecode):
     Para una fecha determinada, retorna el numero de crimenes
     de un tipo especifico.
     """
+    crimes = 0
+    datEntry = bst.get(analyzer["dateIndex"], initialDate)
+    if datEntry is not None:
+        offindex = datEntry["offenseIndex"]
+        offentry = lp.get(offindex, offensecode)
+        if offentry is not None:
+            crime_list = offentry["value"]
+            crimes = lp.size(crime_list)
+    return crimes
+    
     # TODO Completar la función de consulta de crimenes por tipo de crimen en una fecha
-    pass
