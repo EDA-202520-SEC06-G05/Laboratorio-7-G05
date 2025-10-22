@@ -37,11 +37,11 @@ operación solicitada
 # Funciones para la carga de datos
 #  -------------------------------------------------------------
 
-def new_logic():
+def new_logic(crimefile):
     """
     Se crea una instancia del controlador
     """
-    control = logic.new_logic()
+    control = logic.new_logic( )
     return control
 
 #  -------------------------------------------------------------
@@ -77,12 +77,12 @@ def main():
         inputs = input("Seleccione una opción para continuar\n")
             
         if int(inputs[0]) == 1:
+            
             print("\nInicializando....")
             # cont es el controlador que se usará de acá en adelante
-            control = new_logic()
+            control = new_logic(crimefile)
         elif int(inputs[0]) == 2:
             print("\nCargando información de crimenes ....")
-            logic.load_data(control, crimefile)
             print('Crimenes cargados: ' + str(logic.crimes_size(control)))
             print('Altura del arbol: ' + str(logic.index_height(control)))
             print('Elementos en el arbol: ' + str(logic.index_size(control)))

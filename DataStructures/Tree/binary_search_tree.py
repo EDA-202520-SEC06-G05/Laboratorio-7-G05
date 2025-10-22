@@ -42,7 +42,7 @@ def get_node(root,key):
 
 
 def get (my_bst, key):
-    if my_bst["root"] == None:
+    if my_bst["root"] is None:
         return None
     else:
         node = get_node(my_bst["root"], key)

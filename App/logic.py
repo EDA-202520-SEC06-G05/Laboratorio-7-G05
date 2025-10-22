@@ -56,7 +56,7 @@ def new_logic():
 
     analyzer['crimes'] = al.new_list()
     # TODO completar la creación del mapa ordenado
-    analyzer['dateIndex'] = lp.new_map(5000,0.7,None)
+    analyzer['dateIndex'] = bst.new_map()
     return analyzer
 
 # Funciones para realizar la carga
@@ -82,7 +82,7 @@ def add_crime(analyzer, crime):
     funcion que agrega un crimen al catalogo
     """
     al.add_last(analyzer['crimes'], crime)
-    update_date_index(analyzer['dateIndex'], crime)
+    update_date_index(analyzer, crime)
     return analyzer
 
 
