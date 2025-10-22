@@ -22,7 +22,7 @@
  * Contribuciones
  *
  * Dario Correal
- """
+"""
 
 import os
 import csv
@@ -55,7 +55,7 @@ def new_logic():
 
     analyzer['crimes'] = al.new_list()
     # TODO completar la creación del mapa ordenado
-    analyzer['dateIndex'] = lp.new_map()
+    analyzer['dateIndex'] = lp.new_map(5000,0.7,None)
     return analyzer
 
 # Funciones para realizar la carga
@@ -174,7 +174,7 @@ def index_height(analyzer):
     Altura del arbol
     """
     # TODO Completar la función de consulta de altura del árbol
-    pass
+    pass 
 
 
 def index_size(analyzer):

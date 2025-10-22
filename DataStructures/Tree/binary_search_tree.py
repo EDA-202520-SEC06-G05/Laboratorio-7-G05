@@ -135,30 +135,54 @@ def is_empty(my_bst):
         return False
 
 
-def key_set_tree(root,keys):
+def key_set_tree(root, linked_list):
+    
     if root is not None:
-        key_set_tree(root["left"], keys)
-        keys.append(root["key"])
-        key_set_tree(root["right"], keys)
+        key_set_tree(root["left"], linked_list)
+
+        new_node = {"info": root["key"], "next": None}
+        if linked_list["first"] is None:
+            linked_list["first"] = new_node
+            linked_list["last"] = new_node
+        else:
+            linked_list["last"]["next"] = new_node
+            linked_list["last"] = new_node
+        linked_list["size"] += 1
+
+        key_set_tree(root["right"], linked_list)
 
 
 def key_set(my_bst):
-    keys=[]
-    key_set_tree(my_bst["root"], keys)
-    return keys
+    
+    linked_list = {"first": None, "last": None, "size": 0}
+    key_set_tree(my_bst["root"], linked_list)
+    return linked_list
 
 
-def value_set_tree(root,values):
+
+
+def value_set_tree(root, linked_list):
+    
     if root is not None:
-        value_set_tree(root["left"], values)
-        values.append(root["value"])
-        value_set_tree(root["right"], values)
+        value_set_tree(root["left"], linked_list)
+
+        new_node = {"info": root["value"], "next": None}
+        if linked_list["first"] is None:
+            linked_list["first"] = new_node
+            linked_list["last"] = new_node
+        else:
+            linked_list["last"]["next"] = new_node
+            linked_list["last"] = new_node
+        linked_list["size"] += 1
+
+        value_set_tree(root["right"], linked_list)
 
 
 def value_set(my_bst):
-    values=[]
-    value_set_tree(my_bst["root"], values)
-    return values
+    
+    linked_list = {"first": None, "last": None, "size": 0}
+    value_set_tree(my_bst["root"], linked_list)
+    return linked_list
 
 
 def height_tree(root):
@@ -181,7 +205,7 @@ def keys_range(root,key_initial, key_final, all_keys):
         return lt.new_list()
     else:
         keys_in_range = lt.new_list()
-        for i in range (1,lt.size(all_keys)+1):
+        for i in range (0,lt.size(all_keys)):
             key = lt.get_element(all_keys, i)
             if key_initial <= key <= key_final:
                 lt.add_last(keys_in_range, key)
@@ -199,7 +223,7 @@ def values_range(my_bst,key_initial, key_final, all_keys):
         return lt.new_list()
     else:
         values_in_range = lt.new_list()
-        for i in range (1,lt.size(all_keys)+1):
+        for i in range (0,lt.size(all_keys)):
             key = lt.get_element(all_keys, i)
             if key_initial <= key <= key_final:
                 values = get(my_bst, key)
