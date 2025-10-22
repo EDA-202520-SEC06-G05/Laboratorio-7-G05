@@ -82,7 +82,7 @@ def add_crime(analyzer, crime):
     funcion que agrega un crimen al catalogo
     """
     al.add_last(analyzer['crimes'], crime)
-    update_date_index(analyzer, crime)
+    update_date_index(analyzer["dateIndex"], crime)
     return analyzer
 
 
@@ -142,7 +142,7 @@ def new_data_entry(crime):
     """
     entry = {'offenseIndex': None, 'lstcrimes': None}
     entry['offenseIndex'] = lp.new_map(num_elements=30,
-                                        load_factor=0.5)
+                                        load_factor=0.5, prime = None)
     entry['lstcrimes'] = al.new_list()
     return entry
 
@@ -232,3 +232,4 @@ def get_crimes_by_range_code(analyzer, initialDate, offensecode):
     return crimes
     
     # TODO Completar la función de consulta de crimenes por tipo de crimen en una fecha
+
